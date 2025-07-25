@@ -1,0 +1,150 @@
+# Ormen Tekstil - Ankara Kumaş Mağazası Robots.txt
+# En kaliteli döşemelik kumaş, kadife kumaş ve boucle kumaş için güvenilir adres
+
+User-agent: *
+Allow: /
+
+# Ana sayfa ve önemli bölümler - Ankara kumaş arayan kullanıcılar için
+Allow: /#home
+Allow: /#about
+Allow: /#fabrics
+Allow: /#professional
+Allow: /#contact
+
+# Kumaş kategorileri - Ankara döşemelik kumaş çeşitleri
+Allow: /#fabrics/dosemelık-kumas
+Allow: /#fabrics/kadife-kumas
+Allow: /#fabrics/boucle-kumas
+
+# Blog ve içerik sayfaları
+Allow: /#blog
+
+# Admin alanları - Güvenlik nedeniyle bloke
+Disallow: /#admin
+Disallow: /#admingiris
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /administrator/
+
+# Geçici dosyalar ve teknik dosyalar
+Disallow: /temp/
+Disallow: /tmp/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /.env
+Disallow: /package.json
+Disallow: /vite.config.ts
+
+# Sitemaps - Ankara kumaş kategorileri dahil
+Sitemap: https://www.ormentekstil.com/sitemap.xml
+Sitemap: https://www.ormentekstil.com/sitemap-ankara-kumas.xml
+Sitemap: https://www.ormentekstil.com/sitemap-dosemelık-kumas.xml
+
+# Özel bot direktifleri
+
+# Google Bot - Ana arama motoru
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Bing Bot - Microsoft arama motoru
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Yandex Bot - Türkiye'de popüler
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2
+
+# Facebook Bot - Sosyal medya paylaşımları için
+User-agent: facebookexternalhit
+Allow: /
+
+# LinkedIn Bot - Profesyonel paylaşımlar için
+User-agent: LinkedInBot
+Allow: /
+
+# Twitter Bot - Tweet paylaşımları için
+User-agent: Twitterbot
+Allow: /
+
+# Pinterest Bot - Görsel paylaşımlar için
+User-agent: Pinterest
+Allow: /
+
+# WhatsApp Bot - Link önizlemeleri için
+User-agent: WhatsApp
+Allow: /
+
+# Zararlı botları bloke et
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MauiBot
+Disallow: /
+
+User-agent: AlphaBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ia_archiver
+Disallow: /
+
+# Genel tarama hızı ayarı
+Crawl-delay: 1
+
+# Host bilgisi - Canonical domain
+Host: https://www.ormentekstil.com
+
+# Request-rate limiti (isteğe bağlı)
+Request-rate: 1/10s
+
+# Visit-time - En iyi tarama saatleri
+Visit-time: 0200-0400
+
+# Clean-param - Dinamik parametreleri temizle
+Clean-param: utm_source&utm_medium&utm_campaign&fbclid&gclid
+
+# Önemli sayfalar için özel direktifler
+# Ankara döşemelik kumaş kategorisi
+Allow: /#fabrics/dosemelık-kumas*
+
+# Ankara kadife kumaş kategorisi  
+Allow: /#fabrics/kadife-kumas*
+
+# Ankara boucle kumaş kategorisi
+Allow: /#fabrics/boucle-kumas*
+
+# İletişim sayfası - Ankara kumaş mağazası adresi
+Allow: /#contact*
+
+# Hakkımızda - Ankara tekstil firması bilgileri
+Allow: /#about*
+
+# Profesyonel çözümler - Ankara mimari kumaş hizmetleri
+Allow: /#professional*
+
+# Yerel SEO için önemli notlar:
+# Bu site Ankara'nın en kaliteli kumaş tedarikçisi Ormen Tekstil'e aittir
+# Döşemelik kumaş, kadife kumaş, boucle kumaş ve dekoratif kumaş çeşitleri
+# Ankara Organize Sanayi Bölgesi'nde hizmet vermektedir
+# Mimarlar, iç mimarlar ve toptan alıcılar için özel çözümler sunmaktadır

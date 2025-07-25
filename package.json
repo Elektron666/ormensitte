@@ -1,0 +1,93 @@
+{
+  "name": "ormen-tekstil",
+  "version": "2.0.0",
+  "description": "Ormen Tekstil - Ankara'nın En Kaliteli Kumaş Mağazası | Premium Döşemelik Kumaş, Kadife Kumaş ve Boucle Kumaş",
+  "keywords": [
+    "ankara kumaş",
+    "döşemelik kumaş",
+    "kadife kumaş", 
+    "boucle kumaş",
+    "ormen tekstil",
+    "ankara kumaş mağazası",
+    "contract kumaş",
+    "mimari kumaş"
+  ],
+  "author": "Ormen Tekstil",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 3000",
+    "build": "tsc && vite build",
+    "build:production": "NODE_ENV=production tsc && vite build --mode production",
+    "preview": "vite preview --host 0.0.0.0 --port 3000",
+    "preview:production": "NODE_ENV=production vite preview --host 0.0.0.0 --port 3000",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules/.vite",
+    "analyze": "vite-bundle-analyzer",
+    "deploy": "npm run build:production && npm run deploy:files",
+    "deploy:files": "echo 'Build completed. Ready for deployment to production server.'",
+    "test": "echo 'No tests specified yet'",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "framer-motion": "^10.16.16",
+    "lucide-react": "^0.303.0",
+    "react-hook-form": "7.55.0",
+    "sonner": "2.0.3",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.2.0",
+    "recharts": "^2.10.0",
+    "react-slick": "^0.29.0",
+    "react-responsive-masonry": "^2.1.7",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "re-resizable": "^6.9.11"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@types/react-slick": "^0.23.13",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.0",
+    "vite-bundle-analyzer": "^0.7.0",
+    "vite-plugin-pwa": "^0.17.5",
+    "workbox-window": "^7.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ormentekstil/website.git"
+  },
+  "homepage": "https://www.ormentekstil.com",
+  "seo": {
+    "title": "Ormen Tekstil - Ankara Döşemelik Kumaş Mağazası",
+    "description": "Ankara'nın en güvenilir kumaş tedarikçisi. Döşemelik kumaş, kadife kumaş, boucle kumaş çeşitleri. 25 yıllık deneyim.",
+    "keywords": "ankara döşemelik kumaş, ormen tekstil, ankara kumaş, kadife kumaş, boucle kumaş"
+  }
+}

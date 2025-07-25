@@ -1,0 +1,176 @@
+version: '3.8'
+
+services:
+  # Production service
+  ormen-tekstil-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+      args:
+        NODE_ENV: production
+        VITE_APP_VERSION: "2.0.0"
+    container_name: ormen-tekstil-production
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      # SSL certificates (uncomment when ready)
+      # - ./ssl:/etc/ssl/certs:ro
+      # Logs
+      - ./logs/nginx:/var/log/nginx
+      # Custom configuration
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
+    networks:
+      - ormen-network
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ormen.rule=Host(`ormentekstil.com`,`www.ormentekstil.com`)"
+      - "traefik.http.routers.ormen.tls=true"
+      - "traefik.http.routers.ormen.tls.certresolver=letsencrypt"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /var/run
+
+  # Development service
+  ormen-tekstil-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: ormen-tekstil-development
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - VITE_DEV_HOST=0.0.0.0
+      - VITE_DEV_PORT=3000
+    volumes:
+      # Source code for hot reload
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped
+    networks:
+      - ormen-network
+    profiles:
+      - development
+
+  # Nginx proxy for SSL termination (production)
+  nginx-proxy:
+    image: nginx:1.24-alpine
+    container_name: ormen-nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx-proxy.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/ssl/certs:ro
+      - ./logs/proxy:/var/log/nginx
+    depends_on:
+      - ormen-tekstil-prod
+    restart: unless-stopped
+    networks:
+      - ormen-network
+    profiles:
+      - proxy
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: ormen-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
+    command: redis-server /usr/local/etc/redis/redis.conf
+    restart: unless-stopped
+    networks:
+      - ormen-network
+    profiles:
+      - cache
+    security_opt:
+      - no-new-privileges:true
+
+  # Monitoring with Prometheus (optional)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ormen-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    networks:
+      - ormen-network
+    profiles:
+      - monitoring
+
+  # Grafana for visualization (optional)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: ormen-grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=ormen2024!
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    restart: unless-stopped
+    networks:
+      - ormen-network
+    profiles:
+      - monitoring
+
+networks:
+  ormen-network:
+    driver: bridge
+    name: ormen-tekstil-network
+
+volumes:
+  redis-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+# Production deployment
+# Usage:
+# docker-compose up -d ormen-tekstil-prod
+
+# Development
+# Usage:
+# docker-compose --profile development up -d
+
+# Full stack with monitoring
+# Usage:
+# docker-compose --profile monitoring --profile cache up -d
