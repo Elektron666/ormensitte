@@ -1,11 +1,11 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "installCommand": "npm install",
-  "framework": "vite",
   "functions": {
-    "server.js": {
-      "runtime": "nodejs18.x"
+    "api/*.php": {
+      "runtime": "vercel-php@0.6.0"
     }
-  }
+  },
+  "routes": [
+    { "src": "/(.*)\\.php$", "dest": "/api/$1.php" },
+    { "src": "/(.*)", "dest": "/api/index.php" }
+  ]
 }
